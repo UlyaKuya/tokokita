@@ -4,23 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tokokita.adapter.MixedAdapter
-import com.example.tokokita.databinding.FragmentProdukBinding
-import com.example.tokokita.viewmodel.ProdukViewModel
-
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import kotlinx.coroutines.launch
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
+import com.example.tokokita.R
+import com.example.tokokita.adapter.MixedAdapter
+import com.example.tokokita.databinding.FragmentProdukBinding
 import com.example.tokokita.decoration.SpaceItemDecoration
-
-
+import com.example.tokokita.model.ProdukListItem
+import com.example.tokokita.viewmodel.ProdukViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class ProdukFragment : Fragment() {
 
@@ -56,6 +57,7 @@ class ProdukFragment : Fragment() {
         observeData()
         setupRefresh()
         setupSwipeToDelete()
+        setupDeleteAll()
     }
 
     private fun setupRecyclerView() {
@@ -82,7 +84,8 @@ class ProdukFragment : Fragment() {
 
         if (binding.recyclerViewProduk.itemDecorationCount == 0) {
 
-            val spacing = (8 * resources.displayMetrics.density).toInt()
+            val spacing =
+                (8 * resources.displayMetrics.density).toInt()
 
             binding.recyclerViewProduk.addItemDecoration(
                 SpaceItemDecoration(spacing)
@@ -94,7 +97,7 @@ class ProdukFragment : Fragment() {
             val currentLayout =
                 binding.recyclerViewProduk.layoutManager
 
-            if (currentLayout is androidx.recyclerview.widget.GridLayoutManager) {
+            if (currentLayout is GridLayoutManager) {
 
                 // Kembali ke List
                 binding.recyclerViewProduk.layoutManager =
@@ -106,7 +109,7 @@ class ProdukFragment : Fragment() {
 
                 // Ubah ke Grid
                 binding.recyclerViewProduk.layoutManager =
-                    androidx.recyclerview.widget.GridLayoutManager(
+                    GridLayoutManager(
                         requireContext(),
                         2
                     )
@@ -148,17 +151,20 @@ class ProdukFragment : Fragment() {
 
                 viewModel.isRefreshing.collect { refreshing ->
 
-                    binding.swipeRefresh.isRefreshing = refreshing
+                    binding.swipeRefresh.isRefreshing =
+                        refreshing
                 }
             }
         }
     }
+
     private fun setupSwipeToDelete() {
 
         val itemTouchHelper = ItemTouchHelper(
             object : ItemTouchHelper.SimpleCallback(
                 0,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                ItemTouchHelper.LEFT or
+                        ItemTouchHelper.RIGHT
             ) {
 
                 override fun onMove(
@@ -174,15 +180,17 @@ class ProdukFragment : Fragment() {
                     direction: Int
                 ) {
 
-                    val position = viewHolder.bindingAdapterPosition
+                    val position =
+                        viewHolder.bindingAdapterPosition
 
                     if (position == RecyclerView.NO_POSITION) {
                         return
                     }
 
-                    val item = adapter.currentList.getOrNull(position)
+                    val item =
+                        adapter.currentList.getOrNull(position)
 
-                    if (item !is com.example.tokokita.model.ProdukListItem.Item) {
+                    if (item !is ProdukListItem.Item) {
 
                         adapter.notifyItemChanged(position)
                         return
@@ -209,6 +217,30 @@ class ProdukFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(
             binding.recyclerViewProduk
         )
+    }
+
+    private fun setupDeleteAll() {
+
+        binding.btnDeleteAll.setOnClickListener {
+
+            AlertDialog.Builder(requireContext())
+                .setTitle("Hapus Semua Data")
+                .setMessage(
+                    "Apakah Anda yakin ingin menghapus semua data produk?"
+                )
+                .setNegativeButton("BATAL", null)
+                .setPositiveButton("HAPUS SEMUA") { _, _ ->
+
+                    viewModel.deleteAllProduk()
+
+                    Snackbar.make(
+                        binding.root,
+                        "Semua data produk dihapus",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+                .show()
+        }
     }
 
     override fun onDestroyView() {

@@ -35,6 +35,10 @@ class ProdukViewModel : ViewModel() {
         loadProduk()
     }
 
+    fun deleteAllProduk() {
+        _uiState.value = emptyList()
+    }
+
     private fun loadProduk() {
 
         val produk = repository.getProduk()

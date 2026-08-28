@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,13 +28,21 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/btnDeleteAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hapus Semua" />
+
+            <Button
                 android:id="@+id/btnToggleLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="Grid" />
 
         </LinearLayout>
 
+        <!-- Daftar Produk -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewProduk"
             android:layout_width="match_parent"
