@@ -10,11 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tokokita.R
 import com.example.tokokita.adapter.MixedAdapter
 import com.example.tokokita.databinding.FragmentProdukBinding
 import com.example.tokokita.decoration.SpaceItemDecoration
@@ -63,17 +63,24 @@ class ProdukFragment : Fragment() {
     private fun setupRecyclerView() {
 
         adapter = MixedAdapter(
+
+            // =========================
+            // KLIK PRODUK
+            // =========================
             onProdukClick = { item ->
 
-                val produk = item.produk
+                val action =
+                    ProdukFragmentDirections
+                        .actionProdukFragmentToDetailFragment(
+                            productId = item.produk.id
+                        )
 
-                android.widget.Toast.makeText(
-                    requireContext(),
-                    produk.nama,
-                    android.widget.Toast.LENGTH_SHORT
-                ).show()
+                findNavController().navigate(action)
             },
 
+            // =========================
+            // FAVORIT
+            // =========================
             onFavoritClick = { id ->
                 viewModel.toggleFavorit(id)
             }
@@ -92,6 +99,9 @@ class ProdukFragment : Fragment() {
             )
         }
 
+        // =========================
+        // TOGGLE LIST / GRID
+        // =========================
         binding.btnToggleLayout.setOnClickListener {
 
             val currentLayout =
@@ -99,7 +109,6 @@ class ProdukFragment : Fragment() {
 
             if (currentLayout is GridLayoutManager) {
 
-                // Kembali ke List
                 binding.recyclerViewProduk.layoutManager =
                     LinearLayoutManager(requireContext())
 
@@ -107,7 +116,6 @@ class ProdukFragment : Fragment() {
 
             } else {
 
-                // Ubah ke Grid
                 binding.recyclerViewProduk.layoutManager =
                     GridLayoutManager(
                         requireContext(),
@@ -121,6 +129,9 @@ class ProdukFragment : Fragment() {
         binding.recyclerViewProduk.adapter = adapter
     }
 
+    // =========================
+    // OBSERVE DATA
+    // =========================
     private fun observeData() {
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -137,6 +148,9 @@ class ProdukFragment : Fragment() {
         }
     }
 
+    // =========================
+    // PULL TO REFRESH
+    // =========================
     private fun setupRefresh() {
 
         binding.swipeRefresh.setOnRefreshListener {
@@ -158,9 +172,13 @@ class ProdukFragment : Fragment() {
         }
     }
 
+    // =========================
+    // SWIPE TO DELETE
+    // =========================
     private fun setupSwipeToDelete() {
 
         val itemTouchHelper = ItemTouchHelper(
+
             object : ItemTouchHelper.SimpleCallback(
                 0,
                 ItemTouchHelper.LEFT or
@@ -219,6 +237,9 @@ class ProdukFragment : Fragment() {
         )
     }
 
+    // =========================
+    // HAPUS SEMUA
+    // =========================
     private fun setupDeleteAll() {
 
         binding.btnDeleteAll.setOnClickListener {

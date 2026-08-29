@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/produkFragment">
+
+    <fragment
+        android:id="@+id/produkFragment"
+        android:name="com.example.tokokita.ui.ProdukFragment"
+        android:label="TokoKita"
+        tools:layout="@layout/fragment_produk">
+
+        <action
+            android:id="@+id/action_produkFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.tokokita.ui.DetailFragment"
+        android:label="Detail Produk"
+        tools:layout="@layout/fragment_detail">
+
+        <argument
+            android:name="productId"
+            app:argType="integer" />
+
+    </fragment>
+
+</navigation>
