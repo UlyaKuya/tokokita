@@ -17,6 +17,10 @@
             android:id="@+id/action_produkFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
 
+        <action
+            android:id="@+id/action_produkFragment_to_apiFragment"
+            app:destination="@id/apiFragment" />
+
     </fragment>
 
     <fragment
@@ -30,5 +34,11 @@
             app:argType="integer" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/apiFragment"
+        android:name="com.example.tokokita.ui.ApiFragment"
+        android:label="Data API"
+        tools:layout="@layout/fragment_api" />
 
 </navigation>

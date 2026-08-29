@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tokokita.adapter.MixedAdapter
+import com.example.tokokita.R
 import com.example.tokokita.databinding.FragmentProdukBinding
 import com.example.tokokita.decoration.SpaceItemDecoration
 import com.example.tokokita.model.ProdukListItem
@@ -58,6 +59,7 @@ class ProdukFragment : Fragment() {
         setupRefresh()
         setupSwipeToDelete()
         setupDeleteAll()
+        setupApiButton()
     }
 
     private fun setupRecyclerView() {
@@ -261,6 +263,19 @@ class ProdukFragment : Fragment() {
                     ).show()
                 }
                 .show()
+        }
+    }
+
+    // =========================
+// BUKA DATA API
+// =========================
+    private fun setupApiButton() {
+
+        binding.btnApi.setOnClickListener {
+
+            findNavController().navigate(
+            R.id.action_produkFragment_to_apiFragment
+            )
         }
     }
 
