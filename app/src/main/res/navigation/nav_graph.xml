@@ -5,8 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/produkFragment">
+    app:startDestination="@id/todoFragment">
 
+    <!-- ========================= -->
+    <!-- PRODUK -->
+    <!-- ========================= -->
     <fragment
         android:id="@+id/produkFragment"
         android:name="com.example.tokokita.ui.ProdukFragment"
@@ -21,8 +24,16 @@
             android:id="@+id/action_produkFragment_to_apiFragment"
             app:destination="@id/apiFragment" />
 
+        <action
+            android:id="@+id/action_produkFragment_to_todoFragment"
+            app:destination="@id/todoFragment" />
+
     </fragment>
 
+
+    <!-- ========================= -->
+    <!-- DETAIL PRODUK -->
+    <!-- ========================= -->
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.tokokita.ui.DetailFragment"
@@ -35,10 +46,24 @@
 
     </fragment>
 
+
+    <!-- ========================= -->
+    <!-- DATA API -->
+    <!-- ========================= -->
     <fragment
         android:id="@+id/apiFragment"
         android:name="com.example.tokokita.ui.ApiFragment"
         android:label="Data API"
         tools:layout="@layout/fragment_api" />
+
+
+    <!-- ========================= -->
+    <!-- TO-DO LIST -->
+    <!-- ========================= -->
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="com.example.tokokita.ui.TodoFragment"
+        android:label="To-Do List"
+        tools:layout="@layout/fragment_todo" />
 
 </navigation>

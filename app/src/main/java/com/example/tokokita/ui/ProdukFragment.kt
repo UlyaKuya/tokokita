@@ -60,6 +60,7 @@ class ProdukFragment : Fragment() {
         setupSwipeToDelete()
         setupDeleteAll()
         setupApiButton()
+        setupTodoButton()
     }
 
     private fun setupRecyclerView() {
@@ -275,6 +276,18 @@ class ProdukFragment : Fragment() {
 
             findNavController().navigate(
             R.id.action_produkFragment_to_apiFragment
+            )
+        }
+    }
+    // =========================
+// BUKA TO-DO LIST
+// =========================
+    private fun setupTodoButton() {
+
+        binding.btnTodo.setOnClickListener {
+
+            findNavController().navigate(
+                R.id.action_produkFragment_to_todoFragment
             )
         }
     }
