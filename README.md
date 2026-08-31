@@ -1,58 +1,80 @@
-# TokoKita
+# To-Do List
 
-Aplikasi Android sederhana untuk mengelola dan menampilkan data produk.
+Fitur To-Do List pada aplikasi TokoKita digunakan untuk membuat dan mengelola daftar tugas secara lokal menggunakan Room Database.
 
-## Fitur
+## Fitur To-Do List
 
-### 1. List View
+### 1. Tambah Tugas
 
-Produk ditampilkan dalam bentuk daftar vertikal.
+Pengguna dapat menambahkan tugas baru dengan memasukkan judul tugas.
 
-Pengguna dapat melihat beberapa informasi produk secara berurutan sehingga nyaman untuk melihat daftar produk.
+Contoh:
 
-### 2. Grid View
+- Mengerjakan Praktikum 5
+- Membuat laporan
+- Mengumpulkan tugas
 
-Produk dapat ditampilkan dalam bentuk grid dengan 2 kolom.
+### 2. Menampilkan Tugas
 
-Tampilan ini membuat daftar produk menjadi lebih ringkas dan cocok untuk melihat banyak produk sekaligus.
+Semua tugas yang tersimpan akan ditampilkan pada halaman To-Do List.
 
-### 3. Toggle List / Grid
+### 3. Checklist Tugas
 
-Pengguna dapat berpindah antara:
+Setiap tugas memiliki checkbox untuk menandai status tugas.
 
-- **List View**
-- **Grid View**
+- ☐ Belum selesai
+- ☑ Selesai
 
-dengan menekan tombol **Grid/List** pada bagian atas aplikasi.
+Status checklist disimpan ke dalam database Room.
 
-## Teknologi
+### 4. Update Status
 
-- Kotlin
-- Android Studio
-- RecyclerView
-- ViewBinding
-- Material Design
-- Navigation Component
+Pengguna dapat mengubah status tugas dengan menekan checkbox.
 
-## Tampilan
+Perubahan status akan disimpan ke database.
 
-### List View
+### 5. Hapus Tugas
 
-Produk ditampilkan secara vertikal dalam satu kolom.
+Pengguna dapat menghapus tugas yang sudah tidak diperlukan.
 
-### Grid View
+### 6. Penyimpanan Lokal
 
-Produk ditampilkan dalam dua kolom.
+Data To-Do List disimpan menggunakan **Room Database**, sehingga data tetap tersedia meskipun aplikasi ditutup dan dibuka kembali.
 
-## Struktur Tampilan
+## Database
+
+Nama database:
+
+`tokokita_database`
+
+Tabel:
+
+`todos`
+
+Struktur tabel:
+
+| Kolom | Tipe | Keterangan |
+|---|---|---|
+| id | Integer | ID tugas |
+| judul | String | Judul tugas |
+| selesai | Boolean | Status selesai |
+
+## Arsitektur Room
 
 ```text
-TokoKita
-│
-├── Produk
-│   ├── List View
-│   └── Grid View
-│
-├── Detail Produk
-│
-└── Data API
+TodoFragment
+     │
+     ▼
+TodoViewModel
+     │
+     ▼
+TodoRepository
+     │
+     ▼
+TodoDao
+     │
+     ▼
+AppDatabase
+     │
+     ▼
+todos
